@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 var Tarea = require("../models/tarea");
-
 //listar nuestras tareas
 router.get("/", function(req, res) {
   Tarea.find()
