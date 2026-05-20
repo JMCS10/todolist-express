@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Tarea = require("../models/tarea");
 
-// GET - listar todas las tareas
+//listar nuestras tareas
 router.get("/", function(req, res) {
   Tarea.find()
     .then(function(tareas) {
@@ -13,7 +13,8 @@ router.get("/", function(req, res) {
     });
 });
 
-// POST - agregar una tarea
+
+
 router.post("/", function(req, res) {
   var hoy = new Date();
   var fecha = hoy.toLocaleDateString();
@@ -33,7 +34,6 @@ router.post("/", function(req, res) {
     });
 });
 
-// PUT - editar una tarea
 router.put("/:id", function(req, res) {
   Tarea.findById(req.params.id)
     .then(function(tarea) {
@@ -48,7 +48,7 @@ router.put("/:id", function(req, res) {
     });
 });
 
-// DELETE - eliminar una tarea
+
 router.delete("/:id", function(req, res) {
   Tarea.findByIdAndDelete(req.params.id)
     .then(function() {
@@ -59,7 +59,7 @@ router.delete("/:id", function(req, res) {
     });
 });
 
-// PATCH - cambiar estado completado
+
 router.patch("/:id", function(req, res) {
   Tarea.findById(req.params.id)
     .then(function(tarea) {
