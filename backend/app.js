@@ -3,6 +3,8 @@ var mongoose = require("mongoose");
 var tareasRouter = require("./routes/tareas");
 
 var app = express();
+var cors = require("cors");
+app.use(cors());
 
 var mongoDB = "mongodb+srv://admin:admin1234@cluster0.yfe9ftf.mongodb.net/todolist-adaptable?retryWrites=true&w=majority&appName=Cluster0";
 mongoose.connect(mongoDB);
@@ -14,6 +16,6 @@ app.use(express.json());
 
 app.use("/api/tareas", tareasRouter);
 
-app.listen(3000, function() {
-  console.log("Servidor corriendo en puerto 3000");
+app.listen(5000, function() {
+  console.log("Servidor corriendo en puerto 5000");
 });
