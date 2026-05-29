@@ -1,7 +1,7 @@
 var express = require("express");
 var mongoose = require("mongoose");
 var tareasRouter = require("./routes/tareas");
-
+var archivosRouter = require("./routes/archivos");
 var app = express();
 var cors = require("cors");
 app.use(cors());
@@ -15,6 +15,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 app.use(express.json());
 
 app.use("/api/tareas", tareasRouter);
+app.use("/api/archivos", archivosRouter);
 
 app.listen(5000, function() {
   console.log("Servidor corriendo en puerto 5000");
