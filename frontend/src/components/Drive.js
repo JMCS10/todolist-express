@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react";
 
-function Drive() {
+function Drive({ token }) {
   var [archivos, setArchivos] = useState([]);
   var [archivoSeleccionado, setArchivoSeleccionado] = useState(null);
-
 
   useEffect(function() {
     cargarArchivos();
   }, []);
 
 
-
   function cargarArchivos() {
-    fetch("http://localhost:5000/api/archivos")
+    fetch("http://localhost:5000/api/archivos", {
+      headers: { "Authorization": token }
+    })
       .then(function(res) { return res.json(); })
       .then(function(data) { setArchivos(data.datos); });
   }
+
 
 
   function subirArchivo() {
@@ -29,6 +30,7 @@ function Drive() {
 
     fetch("http://localhost:5000/api/archivos/subir", {
       method: "POST",
+      headers: { "Authorization": token },
       body: formData
     })
       .then(function(res) { return res.json(); })
@@ -39,8 +41,11 @@ function Drive() {
       });
   }
 
+
   function descargarArchivo(id, nombreOriginal) {
-    fetch("http://localhost:5000/api/archivos/descargar/" + id)
+    fetch("http://localhost:5000/api/archivos/descargar/" + id, {
+      headers: { "Authorization": token }
+    })
       .then(function(res) { return res.blob(); })
       .then(function(blob) {
         var url = window.URL.createObjectURL(blob);
@@ -53,13 +58,14 @@ function Drive() {
   }
 
   function eliminarArchivo(id) {
-    fetch("http://localhost:5000/api/archivos/" + id, { method: "DELETE" })
+    fetch("http://localhost:5000/api/archivos/" + id, {
+      method: "DELETE",
+      headers: { "Authorization": token }
+    })
       .then(function(res) { return res.json(); })
       .then(function() { cargarArchivos(); });
   }
 
-
-  
   return (
     <div>
       <h1 style={{ textAlign: "center" }}>Drive</h1>
@@ -112,4 +118,5 @@ function Drive() {
     </div>
   );
 }
+
 export default Drive;

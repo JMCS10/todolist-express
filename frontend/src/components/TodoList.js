@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function TodoList() {
+function TodoList({ token }) {
   var [tareas, setTareas] = useState([]);
   var [descripcion, setDescripcion] = useState("");
   var [editandoId, setEditandoId] = useState(null);
@@ -11,12 +11,14 @@ function TodoList() {
   }, []);
 
   function cargarTareas() {
-    fetch("http://localhost:5000/api/tareas")
+    fetch("http://localhost:5000/api/tareas", {
+      headers: { "Authorization": token }
+    })
       .then(function(res) { return res.json(); })
       .then(function(data) { setTareas(data.datos); });
   }
 
-  
+
   function agregarTarea() {
     if (descripcion === "") {
       alert("Ingresa una descripcion");
@@ -24,7 +26,10 @@ function TodoList() {
     }
     fetch("http://localhost:5000/api/tareas", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
       body: JSON.stringify({ descripcion: descripcion })
     })
       .then(function(res) { return res.json(); })
@@ -34,23 +39,36 @@ function TodoList() {
       });
   }
 
+
+
   function eliminarTarea(id) {
-    fetch("http://localhost:5000/api/tareas/" + id, { method: "DELETE" })
+    fetch("http://localhost:5000/api/tareas/" + id, {
+      method: "DELETE",
+      headers: { "Authorization": token }
+    })
       .then(function(res) { return res.json(); })
       .then(function() { cargarTareas(); });
   }
 
+
   function cambiarEstado(id) {
-    fetch("http://localhost:5000/api/tareas/" + id, { method: "PATCH" })
+    fetch("http://localhost:5000/api/tareas/" + id, {
+      method: "PATCH",
+      headers: { "Authorization": token }
+    })
       .then(function(res) { return res.json(); })
       .then(function() { cargarTareas(); });
   }
+
 
 
   function guardarEdicion(id) {
     fetch("http://localhost:5000/api/tareas/" + id, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
       body: JSON.stringify({ descripcion: editandoDesc })
     })
       .then(function(res) { return res.json(); })
@@ -60,6 +78,7 @@ function TodoList() {
         cargarTareas();
       });
   }
+
   return (
     <div>
       <h1 style={{ textAlign: "center" }}>Todo List</h1>
@@ -140,4 +159,5 @@ function TodoList() {
     </div>
   );
 }
+
 export default TodoList;
