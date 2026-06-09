@@ -7,7 +7,8 @@ var ArchivoSchema = new Schema({
   nombreOriginal: { type: String, required: true },
   tipo: { type: String },
   tamanio: { type: Number },
-  fecha: { type: String }
+  fecha: { type: String },
+  usuario: { type: Schema.Types.ObjectId, ref: "Usuario", required: true }
 });
 
 module.exports = mongoose.model("Archivo", ArchivoSchema);

@@ -3,7 +3,7 @@ var fs = require("fs");
 var path = require("path");
 
 exports.listar = function(req, res) {
-  Archivo.find()
+  Archivo.find({ usuario: req.usuario.id })
     .then(function(archivos) {
       res.set("Content-Type", "application/json");
       res.set("X-Total-Count", archivos.length);
@@ -21,10 +21,10 @@ exports.listar = function(req, res) {
 
 exports.subir = function(req, res) {
   var hoy = new Date();
-  Archivo.findOne({ nombreOriginal: req.file.originalname })
+  Archivo.findOne({ nombreOriginal: req.file.originalname, usuario: req.usuario.id })
     .then(function(archivoExistente) {
 
-    
+
       if (archivoExistente) {
         var rutaVieja = path.join(__dirname, "../uploads", archivoExistente.nombre);
         fs.unlinkSync(rutaVieja);
@@ -39,7 +39,8 @@ exports.subir = function(req, res) {
         nombreOriginal: req.file.originalname,
         tipo: req.file.mimetype,
         tamanio: req.file.size,
-        fecha: hoy.toLocaleDateString()
+        fecha: hoy.toLocaleDateString(),
+        usuario: req.usuario.id
       });
 
       return archivo.save();
@@ -57,9 +58,8 @@ exports.subir = function(req, res) {
     });
 };
 
-
 exports.descargar = function(req, res) {
-  Archivo.findById(req.params.id)
+  Archivo.findOne({ _id: req.params.id, usuario: req.usuario.id })
     .then(function(archivo) {
       var rutaArchivo = path.join(__dirname, "../uploads", archivo.nombre);
       res.download(rutaArchivo, archivo.nombreOriginal);
@@ -70,7 +70,7 @@ exports.descargar = function(req, res) {
 };
 
 exports.eliminar = function(req, res) {
-  Archivo.findById(req.params.id)
+  Archivo.findOne({ _id: req.params.id, usuario: req.usuario.id })
     .then(function(archivo) {
       var rutaArchivo = path.join(__dirname, "../uploads", archivo.nombre);
       fs.unlinkSync(rutaArchivo);

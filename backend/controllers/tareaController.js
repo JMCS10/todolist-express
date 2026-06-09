@@ -2,7 +2,7 @@ var Tarea = require("../models/tarea");
 
 //listar nuestras tareas
 exports.listar = function(req, res) {
-  Tarea.find()
+  Tarea.find({ usuario: req.usuario.id })
     .then(function(tareas) {
       res.set("Content-Type", "application/json");
       res.set("X-Total-Count", tareas.length);
@@ -25,7 +25,8 @@ exports.agregar = function(req, res) {
   var tarea = new Tarea({
     descripcion: req.body.descripcion,
     fecha: fecha,
-    completado: false
+    completado: false,
+    usuario: req.usuario.id
   });
 
   tarea.save()
@@ -42,8 +43,10 @@ exports.agregar = function(req, res) {
     });
 };
 
+
+
 exports.editar = function(req, res) {
-  Tarea.findById(req.params.id)
+  Tarea.findOne({ _id: req.params.id, usuario: req.usuario.id })
     .then(function(tarea) {
       tarea.descripcion = req.body.descripcion;
       return tarea.save();
@@ -61,10 +64,8 @@ exports.editar = function(req, res) {
     });
 };
 
-
-
 exports.eliminar = function(req, res) {
-  Tarea.findByIdAndDelete(req.params.id)
+  Tarea.findOneAndDelete({ _id: req.params.id, usuario: req.usuario.id })
     .then(function() {
       res.set("Content-Type", "application/json");
       res.json({
@@ -79,7 +80,7 @@ exports.eliminar = function(req, res) {
 
 
 exports.cambiarEstado = function(req, res) {
-  Tarea.findById(req.params.id)
+  Tarea.findOne({ _id: req.params.id, usuario: req.usuario.id })
     .then(function(tarea) {
       tarea.completado = !tarea.completado;
       return tarea.save();
