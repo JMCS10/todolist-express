@@ -12,7 +12,7 @@ function Auth({ onLogin }) {
       return;
     }
 
-    fetch("http://localhost:5000/api/auth/login", {
+    fetch("https://localhost:5000/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: username, password: password })
@@ -35,7 +35,7 @@ function Auth({ onLogin }) {
       return;
     }
 
-    fetch("http://localhost:5000/api/auth/register", {
+    fetch("https://localhost:5000/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: username, password: password })

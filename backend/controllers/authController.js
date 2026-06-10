@@ -3,7 +3,7 @@ var jwt = require("jsonwebtoken");
 var passport = require("passport");
 var Usuario = require("../models/usuario");
 
-var secreto = "mi_secreto_jwt";
+var secreto = process.env.JWT_SECRET;
 
 exports.register = function(req, res) {
   var username = req.body.username;

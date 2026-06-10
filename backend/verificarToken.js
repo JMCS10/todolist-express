@@ -1,6 +1,6 @@
 var jwt = require("jsonwebtoken");
 
-var secreto = "mi_secreto_jwt";
+var secreto = process.env.JWT_SECRET;
 
 function verificarToken(req, res, next) {
   var token = req.headers["authorization"];

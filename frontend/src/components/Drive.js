@@ -10,7 +10,7 @@ function Drive({ token }) {
 
 
   function cargarArchivos() {
-    fetch("http://localhost:5000/api/archivos", {
+    fetch("https://localhost:5000/api/archivos", {
       headers: { "Authorization": token }
     })
       .then(function(res) { return res.json(); })
@@ -28,7 +28,7 @@ function Drive({ token }) {
     var formData = new FormData();
     formData.append("archivo", archivoSeleccionado);
 
-    fetch("http://localhost:5000/api/archivos/subir", {
+    fetch("https://localhost:5000/api/archivos/subir", {
       method: "POST",
       headers: { "Authorization": token },
       body: formData
@@ -43,7 +43,7 @@ function Drive({ token }) {
 
 
   function descargarArchivo(id, nombreOriginal) {
-    fetch("http://localhost:5000/api/archivos/descargar/" + id, {
+    fetch("https://localhost:5000/api/archivos/descargar/" + id, {
       headers: { "Authorization": token }
     })
       .then(function(res) { return res.blob(); })
@@ -58,7 +58,7 @@ function Drive({ token }) {
   }
 
   function eliminarArchivo(id) {
-    fetch("http://localhost:5000/api/archivos/" + id, {
+    fetch("https://localhost:5000/api/archivos/" + id, {
       method: "DELETE",
       headers: { "Authorization": token }
     })

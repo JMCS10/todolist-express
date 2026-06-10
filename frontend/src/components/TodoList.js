@@ -11,7 +11,7 @@ function TodoList({ token }) {
   }, []);
 
   function cargarTareas() {
-    fetch("http://localhost:5000/api/tareas", {
+    fetch("https://localhost:5000/api/tareas", {
       headers: { "Authorization": token }
     })
       .then(function(res) { return res.json(); })
@@ -24,7 +24,7 @@ function TodoList({ token }) {
       alert("Ingresa una descripcion");
       return;
     }
-    fetch("http://localhost:5000/api/tareas", {
+    fetch("https://localhost:5000/api/tareas", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +42,7 @@ function TodoList({ token }) {
 
 
   function eliminarTarea(id) {
-    fetch("http://localhost:5000/api/tareas/" + id, {
+    fetch("https://localhost:5000/api/tareas/" + id, {
       method: "DELETE",
       headers: { "Authorization": token }
     })
@@ -52,7 +52,7 @@ function TodoList({ token }) {
 
 
   function cambiarEstado(id) {
-    fetch("http://localhost:5000/api/tareas/" + id, {
+    fetch("https://localhost:5000/api/tareas/" + id, {
       method: "PATCH",
       headers: { "Authorization": token }
     })
@@ -63,7 +63,7 @@ function TodoList({ token }) {
 
 
   function guardarEdicion(id) {
-    fetch("http://localhost:5000/api/tareas/" + id, {
+    fetch("https://localhost:5000/api/tareas/" + id, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

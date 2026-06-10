@@ -1,4 +1,8 @@
+require("dotenv").config();
+
 var express = require("express");
+var https = require("https");
+var fs = require("fs");
 var mongoose = require("mongoose");
 var cors = require("cors");
 var passport = require("./passport");
@@ -9,24 +13,33 @@ var verificarToken = require("./verificarToken");
 
 var app = express();
 
-// conexion a MongoDB
-var mongoDB = "mongodb://admin:admin123@ac-htgokle-shard-00-00.yfe9ftf.mongodb.net:27017,ac-htgokle-shard-00-01.yfe9ftf.mongodb.net:27017,ac-htgokle-shard-00-02.yfe9ftf.mongodb.net:27017/todolist?ssl=true&replicaSet=atlas-dsqzjd-shard-0&authSource=admin&appName=Cluster0";
-mongoose.connect(mongoDB);
+mongoose.connect(process.env.MONGODB_URI);
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-// middlewares
+
+
+//middlewares
 app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
 
-// rutas publicas - no necesitan token
+//ruta publica
 app.use("/api/auth", authRouter);
 
-// rutas protegidas - necesitan token
+//rutas protegidas
 app.use("/api/tareas", verificarToken, tareasRouter);
 app.use("/api/archivos", verificarToken, archivosRouter);
 
-app.listen(5000, function() {
-  console.log("Servidor corriendo en puerto 5000");
+
+
+//certificados para HTTPS
+var options = {
+  key: fs.readFileSync("key.pem"),
+  cert: fs.readFileSync("cert.pem")
+};
+
+//servidor HTTPS
+https.createServer(options, app).listen(process.env.PORT, function() {
+  console.log("Servidor HTTPS corriendo en puerto " + process.env.PORT);
 });
