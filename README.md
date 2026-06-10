@@ -19,7 +19,9 @@ cd todolist-express
 
 ### 2. Configurar el backend
 cd backend
+
 npm install
+
 luego crear el archivo .env con este contenido:
 MONGODB_URI=tu_cadena_de_conexion_de_mongodb_atlas
 
