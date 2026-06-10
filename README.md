@@ -37,6 +37,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 nota:Reiniciar powersell luego de la instalacion
 
 -Instalar mkcert, ejecutar en powersell como administrador:
+
 choco install mkcert
 
 -generar los certificados dentro de la carpeta backend(desde el mismo powersell y a la carpeta del backend):
@@ -46,6 +47,7 @@ cd backend
 mkcert -key-file key.pem -cert-file cert.pem localhost
 ### 4. Cargar datos de prueba
 cd backend
+
 node datosdb.js
 
 Usuarios de prueba:
