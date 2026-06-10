@@ -14,6 +14,7 @@ Todo List con autenticación JWT, Drive de archivos y HTTPS.
 ## Instalación
 ### 1. Clonar el repositorio
 git clone https://github.com/JMCS10/todolist-express.git
+
 cd todolist-express
 
 ### 2. Configurar el backend
@@ -21,7 +22,9 @@ cd backend
 npm install
 luego crear el archivo .env con este contenido:
 MONGODB_URI=tu_cadena_de_conexion_de_mongodb_atlas
+
 JWT_SECRET=mi_secreto_jwt
+
 PORT=5000
 
 Para obtener MONGODB_URI: crear una cuenta en MongoDB Atlas, crear un cluster gratuito y copiar la cadena de conexión
@@ -37,7 +40,9 @@ nota:Reiniciar powersell luego de la instalacion
 choco install mkcert
 
 -generar los certificados dentro de la carpeta backend(desde el mismo powersell y a la carpeta del backend):
+
 cd backend
+
 mkcert -key-file key.pem -cert-file cert.pem localhost
 ### 4. Cargar datos de prueba
 cd backend
@@ -48,10 +53,13 @@ Usuarios de prueba:
 - Marcelo / contrasena: 123456
 ### 5. Iniciar el backend
 cd backend
+
 npm run dev
 ### 6. Configurar el frontend
 cd frontend
+
 npm install
+
 npm start
 ### 7. Abrir en el navegador
 https://localhost:3000
